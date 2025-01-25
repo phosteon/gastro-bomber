@@ -75,17 +75,27 @@ const AudioCall: React.FC = () => {
     }
   };
 
+  const pulseScale = 1 + (volume * 0.5); // Scale from 1 to 1.5 based on volume
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-google-light-gray">
       <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full">
         <div className="flex flex-col items-center space-y-6">
-          {/* Avatar/Profile Circle */}
-          <div
-            className={`w-24 h-24 rounded-full bg-google-blue flex items-center justify-center text-white text-2xl font-semibold transition-all ${
-              isCallActive ? 'animate-pulse' : ''
-            }`}
-          >
-            VA
+          {/* Avatar Circle with Pulsing Ring */}
+          <div className="relative">
+            {/* Pulsing Ring */}
+            {isCallActive && isSpeaking && (
+              <div 
+                className="absolute inset-0 rounded-full bg-google-blue/20 transition-transform duration-200"
+                style={{ 
+                  transform: `scale(${pulseScale})`,
+                }}
+              />
+            )}
+            {/* Avatar Circle */}
+            <div className="w-24 h-24 rounded-full bg-google-blue relative z-10 flex items-center justify-center text-white text-2xl font-semibold">
+              VA
+            </div>
           </div>
 
           {/* Status Text */}
@@ -101,13 +111,6 @@ const AudioCall: React.FC = () => {
                 : "Ready to start"}
             </p>
           </div>
-
-          {/* Volume Indicator */}
-          {isCallActive && (
-            <div className="w-full max-w-[200px]">
-              <VolumeIndicator volume={volume} />
-            </div>
-          )}
 
           {/* Call Controls */}
           {isCallActive ? (
