@@ -161,14 +161,15 @@ const AudioCall: React.FC = () => {
                   }}
                 />
               )}
-              {/* Avatar Circle */}
+              {/* Avatar Circle with Animation */}
               <div 
-                className="w-24 h-24 rounded-full relative z-10 shadow-lg overflow-hidden"
+                className="w-24 h-24 rounded-full relative z-10 shadow-lg overflow-hidden transition-transform duration-300 transform"
               >
                 <img 
                   src={currentCoach.avatarUrl}
                   alt={`${currentCoach.name} Avatar`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-opacity duration-300 animate-fade-in"
+                  key={currentCoach.assistantId} // This forces a re-render and animation
                 />
               </div>
             </div>
@@ -182,8 +183,8 @@ const AudioCall: React.FC = () => {
             </button>
           </div>
 
-          {/* Call Duration */}
-          <div className="text-center">
+          {/* Coach Info with Animation */}
+          <div className="text-center transition-all duration-300 animate-fade-in" key={currentCoach.assistantId}>
             <h2 className="text-xl font-semibold text-dark-elegant-text mb-1">
               {currentCoach.name}
             </h2>
