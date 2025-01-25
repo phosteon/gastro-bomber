@@ -134,7 +134,7 @@ const AudioCall: React.FC = () => {
           {/* Call Duration */}
           <div className="text-center">
             <h2 className="text-xl font-semibold text-dark-elegant-text mb-1">
-              Sophia Thial
+              Sophia Thiel
             </h2>
             <p className="text-sm text-dark-elegant-muted">
               Fitness Coach
