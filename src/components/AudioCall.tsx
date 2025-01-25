@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Vapi from '@vapi-ai/web';
 import CallControls from './CallControls';
 import { toast } from 'sonner';
+import { Phone } from 'lucide-react';
 
 const VAPI_PUBLIC_KEY = "e2452687-e6ef-4c5a-88a0-c537b81a3abf";
 const ASSISTANT_ID = "23096253-2223-4723-932d-a4b4fa5cfae8";
@@ -146,8 +147,9 @@ const AudioCall: React.FC = () => {
           ) : (
             <button
               onClick={startCall}
-              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 font-medium"
+              className="px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 font-medium flex items-center gap-2"
             >
+              <Phone size={24} />
               Start Call
             </button>
           )}
