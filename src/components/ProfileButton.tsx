@@ -16,9 +16,9 @@ const ProfileButton = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 h-12 w-12"
           >
-            <User className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+            <User className="h-6 w-6 text-slate-600 dark:text-slate-400" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
