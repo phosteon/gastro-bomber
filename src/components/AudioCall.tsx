@@ -146,26 +146,29 @@ const AudioCall: React.FC = () => {
             )}
           </div>
 
-          {/* Call Controls */}
-          {isCallActive ? (
-            <CallControls
-              isMuted={isMuted}
-              onToggleMute={toggleMute}
-              onEndCall={endCall}
-            />
-          ) : (
-            <div className="relative">
-              {/* Radial Pulse Effect */}
-              <div className="absolute -inset-4 rounded-full animate-pulse bg-gradient-to-r from-green-500/20 to-green-600/20" />
-              <div className="absolute -inset-2 rounded-full animate-pulse delay-75 bg-gradient-to-r from-green-500/30 to-green-600/30" />
-              <button
-                onClick={startCall}
-                className="relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 font-medium flex items-center gap-2 z-10"
-              >
-                <Phone size={24} />
-              </button>
+          {/* Call Controls with Transition */}
+          <div className="relative h-20 w-full flex items-center justify-center">
+            <div className={`absolute transition-all duration-500 transform ${isCallActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
+              <CallControls
+                isMuted={isMuted}
+                onToggleMute={toggleMute}
+                onEndCall={endCall}
+              />
             </div>
-          )}
+            <div className={`absolute transition-all duration-500 transform ${!isCallActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
+              <div className="relative">
+                {/* Radial Pulse Effect */}
+                <div className="absolute -inset-4 rounded-full animate-pulse bg-gradient-to-r from-green-500/20 to-green-600/20" />
+                <div className="absolute -inset-2 rounded-full animate-pulse delay-75 bg-gradient-to-r from-green-500/30 to-green-600/30" />
+                <button
+                  onClick={startCall}
+                  className="relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 font-medium flex items-center gap-2 z-10"
+                >
+                  <Phone size={24} />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
