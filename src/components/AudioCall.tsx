@@ -150,7 +150,6 @@ const AudioCall: React.FC = () => {
               className="px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 font-medium flex items-center gap-2"
             >
               <Phone size={24} />
-              Start Call
             </button>
           )}
         </div>
