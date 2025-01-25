@@ -2,10 +2,25 @@ import React, { useEffect, useState } from 'react';
 import Vapi from '@vapi-ai/web';
 import CallControls from './CallControls';
 import { toast } from 'sonner';
-import { Phone } from 'lucide-react';
+import { Phone, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Coach } from '../types/coach';
 
 const VAPI_PUBLIC_KEY = "e2452687-e6ef-4c5a-88a0-c537b81a3abf";
-const ASSISTANT_ID = "23096253-2223-4723-932d-a4b4fa5cfae8";
+
+const coaches: Coach[] = [
+  {
+    name: "Sophia Thiel",
+    subtitle: "Fitness Coach",
+    assistantId: "23096253-2223-4723-932d-a4b4fa5cfae8",
+    avatarUrl: "/lovable-uploads/296717bc-3a34-4c30-9b20-273a7d0d12ec.png"
+  },
+  {
+    name: "Thomas Kehl",
+    subtitle: "Finanzexperte",
+    assistantId: "a6aa0d50-6a91-44e1-8706-bd41fe605725",
+    avatarUrl: "/lovable-uploads/0bef14fa-d470-4d33-9537-c0cf95b9b2fc.png"
+  }
+];
 
 const AudioCall: React.FC = () => {
   const [vapi, setVapi] = useState<any>(null);
@@ -14,6 +29,9 @@ const AudioCall: React.FC = () => {
   const [volume, setVolume] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [duration, setDuration] = useState(0);
+  const [currentCoachIndex, setCurrentCoachIndex] = useState(0);
+
+  const currentCoach = coaches[currentCoachIndex];
 
   useEffect(() => {
     const vapiInstance = new Vapi(VAPI_PUBLIC_KEY);
@@ -68,7 +86,7 @@ const AudioCall: React.FC = () => {
 
   const startCall = async () => {
     try {
-      await vapi.start(ASSISTANT_ID);
+      await vapi.start(currentCoach.assistantId);
       setIsCallActive(true);
       setDuration(0);
       toast.success("Call started");
@@ -102,42 +120,75 @@ const AudioCall: React.FC = () => {
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
+  const navigateCoach = (direction: 'prev' | 'next') => {
+    if (isCallActive) {
+      toast.error("Please end the current call before switching coaches");
+      return;
+    }
+    
+    setCurrentCoachIndex(prevIndex => {
+      if (direction === 'prev') {
+        return prevIndex > 0 ? prevIndex - 1 : coaches.length - 1;
+      } else {
+        return prevIndex < coaches.length - 1 ? prevIndex + 1 : 0;
+      }
+    });
+  };
+
   const pulseScale = 1 + (volume * 0.5);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-dark-elegant-background">
       <div className="bg-dark-elegant-surface p-8 rounded-3xl shadow-2xl max-w-md w-full border border-dark-elegant-accent/30 backdrop-blur-lg">
         <div className="flex flex-col items-center space-y-8">
-          {/* Avatar Circle with Pulsing Ring */}
-          <div className="relative">
-            {/* Pulsing Ring */}
-            {isCallActive && isSpeaking && (
-              <div 
-                className="absolute inset-0 rounded-full bg-blue-500/20 transition-transform duration-200"
-                style={{ 
-                  transform: `scale(${pulseScale})`,
-                }}
-              />
-            )}
-            {/* Avatar Circle */}
-            <div 
-              className="w-24 h-24 rounded-full relative z-10 shadow-lg overflow-hidden"
+          {/* Avatar Circle with Navigation Arrows */}
+          <div className="relative flex items-center justify-center w-full">
+            <button
+              onClick={() => navigateCoach('prev')}
+              className="absolute left-0 p-2 text-dark-elegant-text hover:text-white transition-colors disabled:opacity-50"
+              disabled={isCallActive}
             >
-              <img 
-                src="/lovable-uploads/296717bc-3a34-4c30-9b20-273a7d0d12ec.png"
-                alt="Assistant Avatar"
-                className="w-full h-full object-cover"
-              />
+              <ChevronLeft size={24} />
+            </button>
+            
+            <div className="relative">
+              {/* Pulsing Ring */}
+              {isCallActive && isSpeaking && (
+                <div 
+                  className="absolute inset-0 rounded-full bg-blue-500/20 transition-transform duration-200"
+                  style={{ 
+                    transform: `scale(${pulseScale})`,
+                  }}
+                />
+              )}
+              {/* Avatar Circle */}
+              <div 
+                className="w-24 h-24 rounded-full relative z-10 shadow-lg overflow-hidden"
+              >
+                <img 
+                  src={currentCoach.avatarUrl}
+                  alt={`${currentCoach.name} Avatar`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
+
+            <button
+              onClick={() => navigateCoach('next')}
+              className="absolute right-0 p-2 text-dark-elegant-text hover:text-white transition-colors disabled:opacity-50"
+              disabled={isCallActive}
+            >
+              <ChevronRight size={24} />
+            </button>
           </div>
 
           {/* Call Duration */}
           <div className="text-center">
             <h2 className="text-xl font-semibold text-dark-elegant-text mb-1">
-              Sophia Thiel
+              {currentCoach.name}
             </h2>
             <p className="text-sm text-dark-elegant-muted">
-              Fitness Coach
+              {currentCoach.subtitle}
             </p>
             {isCallActive && (
               <p className="text-sm text-dark-elegant-muted font-mono">
