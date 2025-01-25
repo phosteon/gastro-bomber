@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Vapi from '@vapi-ai/web';
-import VolumeIndicator from './VolumeIndicator';
 import CallControls from './CallControls';
 import { toast } from 'sonner';
 
@@ -102,36 +101,36 @@ const AudioCall: React.FC = () => {
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  const pulseScale = 1 + (volume * 0.5); // Scale from 1 to 1.5 based on volume
+  const pulseScale = 1 + (volume * 0.5);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-google-light-gray">
-      <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full">
-        <div className="flex flex-col items-center space-y-6">
+    <div className="min-h-screen flex items-center justify-center bg-dark-elegant-background">
+      <div className="bg-dark-elegant-surface p-8 rounded-3xl shadow-2xl max-w-md w-full border border-dark-elegant-accent/30 backdrop-blur-lg">
+        <div className="flex flex-col items-center space-y-8">
           {/* Avatar Circle with Pulsing Ring */}
           <div className="relative">
             {/* Pulsing Ring */}
             {isCallActive && isSpeaking && (
               <div 
-                className="absolute inset-0 rounded-full bg-google-blue/20 transition-transform duration-200"
+                className="absolute inset-0 rounded-full bg-blue-500/20 transition-transform duration-200"
                 style={{ 
                   transform: `scale(${pulseScale})`,
                 }}
               />
             )}
             {/* Avatar Circle */}
-            <div className="w-24 h-24 rounded-full bg-google-blue relative z-10 flex items-center justify-center text-white text-2xl font-semibold">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 relative z-10 flex items-center justify-center text-white text-2xl font-semibold shadow-lg">
               VA
             </div>
           </div>
 
           {/* Call Duration */}
           <div className="text-center">
-            <h2 className="text-xl font-semibold text-google-gray">
+            <h2 className="text-xl font-semibold text-dark-elegant-text mb-1">
               Vapi Assistant
             </h2>
             {isCallActive && (
-              <p className="text-sm text-gray-500 font-mono">
+              <p className="text-sm text-dark-elegant-muted font-mono">
                 {formatDuration(duration)}
               </p>
             )}
@@ -147,7 +146,7 @@ const AudioCall: React.FC = () => {
           ) : (
             <button
               onClick={startCall}
-              className="px-6 py-3 bg-google-blue text-white rounded-full hover:bg-blue-600 transition-all"
+              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 font-medium"
             >
               Start Call
             </button>

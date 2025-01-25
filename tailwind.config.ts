@@ -57,6 +57,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "dark-elegant": {
+          background: "#1A1F2C",
+          surface: "#252A3C",
+          accent: "#3B4252",
+          text: "#E5E9F0",
+          muted: "#8E9196"
+        },
       },
       keyframes: {
         "accordion-down": {
