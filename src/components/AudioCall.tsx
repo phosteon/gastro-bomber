@@ -4,8 +4,8 @@ import VolumeIndicator from './VolumeIndicator';
 import CallControls from './CallControls';
 import { toast } from 'sonner';
 
-const VAPI_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; // Replace with your actual public key
-const ASSISTANT_ID = "YOUR_ASSISTANT_ID"; // Replace with your actual assistant ID
+const VAPI_PUBLIC_KEY = "e2452687-e6ef-4c5a-88a0-c537b81a3abf";
+const ASSISTANT_ID = "23096253-2223-4723-932d-a4b4fa5cfae8";
 
 const AudioCall: React.FC = () => {
   const [vapi, setVapi] = useState<any>(null);
