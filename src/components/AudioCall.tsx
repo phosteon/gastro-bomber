@@ -1,0 +1,133 @@
+import React, { useEffect, useState } from 'react';
+import Vapi from '@vapi-ai/web';
+import VolumeIndicator from './VolumeIndicator';
+import CallControls from './CallControls';
+import { toast } from 'sonner';
+
+const VAPI_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; // Replace with your actual public key
+const ASSISTANT_ID = "YOUR_ASSISTANT_ID"; // Replace with your actual assistant ID
+
+const AudioCall: React.FC = () => {
+  const [vapi, setVapi] = useState<any>(null);
+  const [isCallActive, setIsCallActive] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(0);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    const vapiInstance = new Vapi(VAPI_PUBLIC_KEY);
+    setVapi(vapiInstance);
+
+    vapiInstance.on("speech-start", () => {
+      setIsSpeaking(true);
+    });
+
+    vapiInstance.on("speech-end", () => {
+      setIsSpeaking(false);
+    });
+
+    vapiInstance.on("volume-level", (vol: number) => {
+      setVolume(vol);
+    });
+
+    vapiInstance.on("call-end", () => {
+      setIsCallActive(false);
+      toast.info("Call ended");
+    });
+
+    vapiInstance.on("error", (error: Error) => {
+      console.error("Vapi error:", error);
+      toast.error("An error occurred during the call");
+    });
+
+    return () => {
+      if (vapiInstance) {
+        vapiInstance.stop();
+      }
+    };
+  }, []);
+
+  const startCall = async () => {
+    try {
+      await vapi.start(ASSISTANT_ID);
+      setIsCallActive(true);
+      toast.success("Call started");
+    } catch (error) {
+      console.error("Error starting call:", error);
+      toast.error("Failed to start call");
+    }
+  };
+
+  const endCall = () => {
+    if (vapi) {
+      vapi.stop();
+      setIsCallActive(false);
+      toast.info("Call ended");
+    }
+  };
+
+  const toggleMute = () => {
+    if (vapi) {
+      const newMuteState = !isMuted;
+      vapi.setMuted(newMuteState);
+      setIsMuted(newMuteState);
+      toast.info(newMuteState ? "Microphone muted" : "Microphone unmuted");
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-google-light-gray">
+      <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full">
+        <div className="flex flex-col items-center space-y-6">
+          {/* Avatar/Profile Circle */}
+          <div
+            className={`w-24 h-24 rounded-full bg-google-blue flex items-center justify-center text-white text-2xl font-semibold transition-all ${
+              isCallActive ? 'animate-pulse' : ''
+            }`}
+          >
+            VA
+          </div>
+
+          {/* Status Text */}
+          <div className="text-center">
+            <h2 className="text-xl font-semibold text-google-gray">
+              Vapi Assistant
+            </h2>
+            <p className="text-sm text-gray-500">
+              {isCallActive
+                ? isSpeaking
+                  ? "Speaking..."
+                  : "Listening..."
+                : "Ready to start"}
+            </p>
+          </div>
+
+          {/* Volume Indicator */}
+          {isCallActive && (
+            <div className="w-full max-w-[200px]">
+              <VolumeIndicator volume={volume} />
+            </div>
+          )}
+
+          {/* Call Controls */}
+          {isCallActive ? (
+            <CallControls
+              isMuted={isMuted}
+              onToggleMute={toggleMute}
+              onEndCall={endCall}
+            />
+          ) : (
+            <button
+              onClick={startCall}
+              className="px-6 py-3 bg-google-blue text-white rounded-full hover:bg-blue-600 transition-all"
+            >
+              Start Call
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AudioCall;
