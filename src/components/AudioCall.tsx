@@ -120,8 +120,14 @@ const AudioCall: React.FC = () => {
               />
             )}
             {/* Avatar Circle */}
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 relative z-10 flex items-center justify-center text-white text-2xl font-semibold shadow-lg">
-              VA
+            <div 
+              className="w-24 h-24 rounded-full relative z-10 shadow-lg overflow-hidden"
+            >
+              <img 
+                src="/lovable-uploads/296717bc-3a34-4c30-9b20-273a7d0d12ec.png"
+                alt="Assistant Avatar"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 
