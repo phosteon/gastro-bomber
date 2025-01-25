@@ -13,6 +13,7 @@ const AudioCall: React.FC = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     const vapiInstance = new Vapi(VAPI_PUBLIC_KEY);
@@ -32,6 +33,7 @@ const AudioCall: React.FC = () => {
 
     vapiInstance.on("call-end", () => {
       setIsCallActive(false);
+      setDuration(0);
       toast.info("Call ended");
     });
 
@@ -47,10 +49,28 @@ const AudioCall: React.FC = () => {
     };
   }, []);
 
+  // Call duration timer
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+    
+    if (isCallActive) {
+      intervalId = setInterval(() => {
+        setDuration(prev => prev + 1);
+      }, 1000);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [isCallActive]);
+
   const startCall = async () => {
     try {
       await vapi.start(ASSISTANT_ID);
       setIsCallActive(true);
+      setDuration(0);
       toast.success("Call started");
     } catch (error) {
       console.error("Error starting call:", error);
@@ -62,6 +82,7 @@ const AudioCall: React.FC = () => {
     if (vapi) {
       vapi.stop();
       setIsCallActive(false);
+      setDuration(0);
       toast.info("Call ended");
     }
   };
@@ -73,6 +94,12 @@ const AudioCall: React.FC = () => {
       setIsMuted(newMuteState);
       toast.info(newMuteState ? "Microphone muted" : "Microphone unmuted");
     }
+  };
+
+  const formatDuration = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
   const pulseScale = 1 + (volume * 0.5); // Scale from 1 to 1.5 based on volume
@@ -98,18 +125,16 @@ const AudioCall: React.FC = () => {
             </div>
           </div>
 
-          {/* Status Text */}
+          {/* Call Duration */}
           <div className="text-center">
             <h2 className="text-xl font-semibold text-google-gray">
               Vapi Assistant
             </h2>
-            <p className="text-sm text-gray-500">
-              {isCallActive
-                ? isSpeaking
-                  ? "Speaking..."
-                  : "Listening..."
-                : "Ready to start"}
-            </p>
+            {isCallActive && (
+              <p className="text-sm text-gray-500 font-mono">
+                {formatDuration(duration)}
+              </p>
+            )}
           </div>
 
           {/* Call Controls */}
