@@ -134,8 +134,11 @@ const AudioCall: React.FC = () => {
           {/* Call Duration */}
           <div className="text-center">
             <h2 className="text-xl font-semibold text-dark-elegant-text mb-1">
-              Vapi Assistant
+              Sophia Thial
             </h2>
+            <p className="text-sm text-dark-elegant-muted">
+              Fitness Coach
+            </p>
             {isCallActive && (
               <p className="text-sm text-dark-elegant-muted font-mono">
                 {formatDuration(duration)}
