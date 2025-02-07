@@ -35,7 +35,7 @@ const AudioCall: React.FC = () => {
   const [volume, setVolume] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [currentCoachIndex, setCurrentCoachIndex] = useState(0);
+  const [currentCoachIndex, setCurrentCoachIndex] = useState(2); // Setze Jan Herwig Haubrich als Standard (Index 2)
 
   const currentCoach = coaches[currentCoachIndex];
 
