@@ -19,6 +19,12 @@ const coaches: Coach[] = [
     subtitle: "Finanzexperte",
     assistantId: "a6aa0d50-6a91-44e1-8706-bd41fe605725",
     avatarUrl: "/lovable-uploads/0bef14fa-d470-4d33-9537-c0cf95b9b2fc.png"
+  },
+  {
+    name: "Jan Herwig Haubrich",
+    subtitle: "Männercoach & Abnehmexperte",
+    assistantId: "a296c6d2-9718-413a-9792-52efb21197cb",
+    avatarUrl: "/lovable-uploads/19226ee2-e8c4-471d-8544-d569bb3ab21e.png"
   }
 ];
 
