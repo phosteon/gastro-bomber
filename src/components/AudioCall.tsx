@@ -28,7 +28,7 @@ const coaches: Coach[] = [
     avatarUrl: "/lovable-uploads/19226ee2-e8c4-471d-8544-d569bb3ab21e.png"
   },
   {
-    name: "Jan Herwig Haubrich v 0.2",
+    name: "Jan Herwig Haubrich v0.2",
     subtitle: "Männercoach & Abnehmexperte",
     assistantId: "ff89b66d-db91-4fc9-aa7a-9009fa5c1fe8",
     avatarUrl: "/lovable-uploads/19226ee2-e8c4-471d-8544-d569bb3ab21e.png"
@@ -42,7 +42,7 @@ const AudioCall: React.FC = () => {
   const [volume, setVolume] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [currentCoachIndex, setCurrentCoachIndex] = useState(2); // Setze Jan Herwig Haubrich als Standard (Index 2)
+  const [currentCoachIndex, setCurrentCoachIndex] = useState(3); // Setze Jan Herwig Haubrich v0.2 als Standard (Index 3)
 
   const currentCoach = coaches[currentCoachIndex];
 
