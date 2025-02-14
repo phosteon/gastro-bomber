@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import Vapi from '@vapi-ai/web';
 import CallControls from './CallControls';
@@ -23,7 +24,7 @@ const coaches: Coach[] = [
   {
     name: "Jan Herwig Haubrich",
     subtitle: "Männercoach & Abnehmexperte",
-    assistantId: "a296c6d2-9718-413a-9792-52efb21197cb",
+    assistantId: "929f1e3b-56aa-4f34-9789-f85b26d86775",
     avatarUrl: "/lovable-uploads/19226ee2-e8c4-471d-8544-d569bb3ab21e.png"
   }
 ];
