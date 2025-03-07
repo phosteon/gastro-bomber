@@ -6,7 +6,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import { Check } from 'lucide-react';
+import { Check, Calendar as CalendarIcon } from 'lucide-react';
 
 interface CalendarBookingProps {
   packageType: string;
@@ -80,10 +80,10 @@ const CalendarBooking: React.FC<CalendarBookingProps> = ({ packageType, coachNam
     <div className="flex flex-col items-center">
       {!isBooked ? (
         <>
-          <div className="flex flex-col md:flex-row w-full gap-8">
+          <div className="flex flex-col lg:flex-row w-full gap-8">
             {/* Calendar */}
-            <div className="md:w-1/2">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div className="lg:w-1/2">
+              <div className="bg-black/30 backdrop-blur-md rounded-xl shadow-lg p-5 border border-white/5">
                 <Calendar
                   mode="single"
                   selected={date}
@@ -92,8 +92,8 @@ const CalendarBooking: React.FC<CalendarBookingProps> = ({ packageType, coachNam
                   modifiersStyles={{
                     available: { 
                       fontWeight: 'bold',
-                      color: 'var(--purple-500)', 
-                      backgroundColor: 'var(--purple-50)' 
+                      color: '#22C55E', 
+                      backgroundColor: 'rgba(34, 197, 94, 0.1)' 
                     }
                   }}
                   disabled={(date) => {
@@ -112,9 +112,9 @@ const CalendarBooking: React.FC<CalendarBookingProps> = ({ packageType, coachNam
             </div>
 
             {/* Time slots */}
-            <div className="md:w-1/2">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 h-full">
-                <h3 className="text-lg font-medium mb-4">
+            <div className="lg:w-1/2">
+              <div className="bg-black/30 backdrop-blur-md rounded-xl shadow-lg p-5 border border-white/5 h-full">
+                <h3 className="text-lg font-medium mb-4 text-white">
                   {date 
                     ? `Verfügbare Zeiten am ${format(date, 'dd. MMMM yyyy', {locale: de})}`
                     : 'Bitte wählen Sie zuerst ein Datum'
@@ -128,10 +128,10 @@ const CalendarBooking: React.FC<CalendarBookingProps> = ({ packageType, coachNam
                         key={time}
                         onClick={() => handleTimeSelect(time)}
                         className={cn(
-                          "py-2 px-4 rounded-md border transition-all duration-200 text-sm",
+                          "py-2 px-4 rounded-lg transition-all duration-200 text-sm border",
                           selectedTimeSlot === time
-                            ? "bg-purple-100 border-purple-400 text-purple-700 dark:bg-purple-900/40 dark:border-purple-700 dark:text-purple-300"
-                            : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+                            ? "bg-[#22C55E]/20 border-[#22C55E]/30 text-[#22C55E]"
+                            : "bg-black/30 border-white/5 text-gray-300 hover:bg-white/5"
                         )}
                       >
                         {time} Uhr
@@ -140,7 +140,8 @@ const CalendarBooking: React.FC<CalendarBookingProps> = ({ packageType, coachNam
                   </div>
                 ) : (
                   date && (
-                    <div className="flex flex-col items-center justify-center py-8 text-gray-500 dark:text-gray-400">
+                    <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                      <CalendarIcon className="w-12 h-12 mb-4 text-gray-500/50" />
                       <p>Keine Termine verfügbar an diesem Tag.</p>
                       <p className="mt-2">Bitte wählen Sie ein anderes Datum.</p>
                     </div>
@@ -150,14 +151,19 @@ const CalendarBooking: React.FC<CalendarBookingProps> = ({ packageType, coachNam
             </div>
           </div>
 
-          <div className="mt-8 w-full md:w-1/2">
+          <div className="mt-8 w-full lg:w-1/2">
             <Button
               onClick={handleBooking}
               disabled={!date || !selectedTimeSlot || isConfirming}
-              className="w-full py-6 text-lg"
+              className={cn(
+                "w-full py-6 text-lg transition-all duration-300 relative",
+                !date || !selectedTimeSlot
+                  ? "bg-gray-700/50 text-gray-400"
+                  : "bg-[#22C55E] hover:bg-[#1ea34d] text-white shadow-lg shadow-[#22C55E]/20"
+              )}
             >
               {isConfirming ? (
-                <span className="flex items-center">
+                <span className="flex items-center justify-center">
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -165,24 +171,27 @@ const CalendarBooking: React.FC<CalendarBookingProps> = ({ packageType, coachNam
                   Termin wird gebucht...
                 </span>
               ) : (
-                `Termin buchen: ${date && selectedTimeSlot ? `${format(date, 'dd.MM.')} um ${selectedTimeSlot} Uhr` : ''}`
+                `Termin buchen: ${date && selectedTimeSlot ? `${format(date, 'dd.MM.')} um ${selectedTimeSlot} Uhr` : 'Bitte Datum und Uhrzeit auswählen'}`
               )}
             </Button>
           </div>
         </>
       ) : (
-        <div className="text-center py-8">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check className="h-8 w-8 text-green-600" />
+        <div className="text-center py-8 bg-black/20 backdrop-blur-md rounded-xl p-8 border border-white/5 w-full">
+          <div className="w-20 h-20 bg-[#22C55E]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Check className="h-10 w-10 text-[#22C55E]" />
           </div>
-          <h2 className="text-2xl font-bold mb-2">Termin erfolgreich gebucht!</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
+          <h2 className="text-2xl font-bold mb-3 text-white">Termin erfolgreich gebucht!</h2>
+          <p className="text-gray-300 mb-6">
             Ihr Termin mit {coachName} am {date && format(date, 'dd.MM.yyyy')} um {selectedTimeSlot} Uhr wurde bestätigt.
           </p>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
+          <p className="text-gray-400 mb-8 max-w-md mx-auto">
             Sie erhalten in Kürze eine Bestätigungs-E-Mail mit allen Details zu Ihrem {packageType === 'premium' ? 'Premium-Coaching' : 'Community-Onboarding'}.
           </p>
-          <Button onClick={() => window.location.href = '/'}>
+          <Button 
+            onClick={() => window.location.href = '/'} 
+            className="bg-white/10 hover:bg-white/15 text-white border border-white/10 px-6"
+          >
             Zurück zur Startseite
           </Button>
         </div>
