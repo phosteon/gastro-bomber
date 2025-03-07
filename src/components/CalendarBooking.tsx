@@ -6,7 +6,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import { Check, Calendar as CalendarIcon } from 'lucide-react';
+import { Check, Calendar as CalendarIcon, ArrowLeft } from 'lucide-react';
 
 interface CalendarBookingProps {
   packageType: string;
@@ -200,8 +200,9 @@ const CalendarBooking: React.FC<CalendarBookingProps> = ({ packageType, coachNam
           </p>
           <Button 
             onClick={() => window.location.href = '/'} 
-            className="bg-white/10 hover:bg-white/15 text-white border border-white/10 px-4 sm:px-6 py-2"
+            className="bg-[#171923] hover:bg-[#222533] text-white border-none text-base sm:text-lg px-6 sm:px-8 py-3 rounded-md w-full sm:w-auto flex items-center justify-center gap-2"
           >
+            <ArrowLeft className="h-5 w-5" />
             Zurück zur Startseite
           </Button>
         </div>

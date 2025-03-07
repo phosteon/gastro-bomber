@@ -88,7 +88,7 @@ const AfterCallPage: React.FC = () => {
             onClick={handleBackToHome}
           >
             <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Zurück zum Start
+            Zurück zur Startseite
           </Button>
         </div>
 
