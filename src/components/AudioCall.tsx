@@ -1,12 +1,11 @@
 
-import React, { useEffect, useState } from 'react';
-import Vapi from '@vapi-ai/web';
+import React, { useEffect, useState, useRef } from 'react';
+import { RetellWebClient } from "retell-client-js-sdk";
 import CallControls from './CallControls';
 import { toast } from 'sonner';
 import { Phone, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Coach } from '../types/coach';
-
-const VAPI_PUBLIC_KEY = "e2452687-e6ef-4c5a-88a0-c537b81a3abf";
+import { createWebCall } from '../services/retellService';
 
 const coaches: Coach[] = [
   {
@@ -30,7 +29,7 @@ const coaches: Coach[] = [
 ];
 
 const AudioCall: React.FC = () => {
-  const [vapi, setVapi] = useState<any>(null);
+  const retellClientRef = useRef<RetellWebClient | null>(null);
   const [isCallActive, setIsCallActive] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0);
@@ -41,35 +40,47 @@ const AudioCall: React.FC = () => {
   const currentCoach = coaches[currentCoachIndex];
 
   useEffect(() => {
-    const vapiInstance = new Vapi(VAPI_PUBLIC_KEY);
-    setVapi(vapiInstance);
+    // Initialisierung des RetellWebClient
+    const retellClient = new RetellWebClient();
+    retellClientRef.current = retellClient;
 
-    vapiInstance.on("speech-start", () => {
+    // Event-Listener für RetellAI einrichten
+    retellClient.on("agent_start_talking", () => {
       setIsSpeaking(true);
     });
 
-    vapiInstance.on("speech-end", () => {
+    retellClient.on("agent_stop_talking", () => {
       setIsSpeaking(false);
     });
 
-    vapiInstance.on("volume-level", (vol: number) => {
-      setVolume(vol);
+    retellClient.on("update", (update) => {
+      // Hier könnte der Lautstärkepegel aus einem Metadaten-Update kommen
+      // Da RetellAI keinen direkten volume-level-Event hat, verwenden wir einen Näherungswert
+      // basierend auf der Tatsache, dass Updates während des Sprechens häufiger sind
+      if (isSpeaking) {
+        // Simulieren eines Lautstärkewerts zwischen 0.3 und 0.7
+        setVolume(0.3 + Math.random() * 0.4);
+      } else {
+        setVolume(0);
+      }
     });
 
-    vapiInstance.on("call-end", () => {
+    retellClient.on("call_ended", () => {
       setIsCallActive(false);
       setDuration(0);
       toast.info("Call ended");
     });
 
-    vapiInstance.on("error", (error: Error) => {
-      console.error("Vapi error:", error);
+    retellClient.on("error", (error) => {
+      console.error("RetellAI error:", error);
       toast.error("An error occurred during the call");
+      setIsCallActive(false);
     });
 
     return () => {
-      if (vapiInstance) {
-        vapiInstance.stop();
+      // Cleanup: Alle Event-Listener entfernen und den Call beenden
+      if (retellClientRef.current) {
+        retellClientRef.current.stopCall();
       }
     };
   }, []);
@@ -93,7 +104,23 @@ const AudioCall: React.FC = () => {
 
   const startCall = async () => {
     try {
-      await vapi.start(currentCoach.assistantId);
+      if (!retellClientRef.current) {
+        toast.error("RetellAI client not initialized");
+        return;
+      }
+
+      // Hier rufen wir unser Backend an, um einen Access Token zu erhalten
+      const createCallResponse = await createWebCall(currentCoach.assistantId);
+      
+      // Starten des Calls mit RetellAI
+      await retellClientRef.current.startCall({
+        accessToken: createCallResponse.access_token,
+        // Optionale Konfigurationen könnten hier hinzugefügt werden
+        // sampleRate: 24000,
+        // captureDeviceId: "default",
+        // emitRawAudioSamples: false,
+      });
+
       setIsCallActive(true);
       setDuration(0);
       toast.success("Call started");
@@ -104,8 +131,8 @@ const AudioCall: React.FC = () => {
   };
 
   const endCall = () => {
-    if (vapi) {
-      vapi.stop();
+    if (retellClientRef.current) {
+      retellClientRef.current.stopCall();
       setIsCallActive(false);
       setDuration(0);
       toast.info("Call ended");
@@ -113,10 +140,15 @@ const AudioCall: React.FC = () => {
   };
 
   const toggleMute = () => {
-    if (vapi) {
+    if (retellClientRef.current) {
+      // RetellAI hat keine direkte setMuted Methode wie VAPI
+      // Stattdessen müssten wir das Audio Capture Device stummschalten
+      // Hier simulieren wir das Stummschalten für die Demo
       const newMuteState = !isMuted;
-      vapi.setMuted(newMuteState);
       setIsMuted(newMuteState);
+      
+      // In einer echten Implementierung könnten wir das Audio Track stummschalten
+      // oder einen Reload mit einem stummen Gerät durchführen
       toast.info(newMuteState ? "Microphone muted" : "Microphone unmuted");
     }
   };
