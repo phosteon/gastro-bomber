@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
+import { useNavigate } from 'react-router-dom';
 import CallControls from './CallControls';
 import { toast } from 'sonner';
 import { Phone } from 'lucide-react';
@@ -17,6 +18,7 @@ const coaches: Coach[] = [
 ];
 
 const AudioCall: React.FC = () => {
+  const navigate = useNavigate();
   const retellClientRef = useRef<RetellWebClient | null>(null);
   const [isCallActive, setIsCallActive] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -25,6 +27,7 @@ const AudioCall: React.FC = () => {
   const [duration, setDuration] = useState(0);
   const [currentCoachIndex, setCurrentCoachIndex] = useState(0);
   const [isCallStarting, setIsCallStarting] = useState(false);
+  const [isCallEnding, setIsCallEnding] = useState(false);
 
   const currentCoach = coaches[currentCoachIndex];
 
@@ -51,7 +54,12 @@ const AudioCall: React.FC = () => {
     retellClient.on("call_ended", () => {
       setIsCallActive(false);
       setDuration(0);
+      setIsCallEnding(true);
       toast.info("Call ended");
+      
+      setTimeout(() => {
+        navigate('/after-call');
+      }, 1000);
     });
 
     retellClient.on("error", (error) => {
@@ -65,7 +73,7 @@ const AudioCall: React.FC = () => {
         retellClientRef.current.stopCall();
       }
     };
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
@@ -121,7 +129,13 @@ const AudioCall: React.FC = () => {
       retellClientRef.current.stopCall();
       setIsCallActive(false);
       setDuration(0);
+      setIsCallEnding(true);
+      
       toast.info("Call ended");
+      
+      setTimeout(() => {
+        navigate('/after-call');
+      }, 1000);
     }
   };
 
@@ -155,7 +169,7 @@ const AudioCall: React.FC = () => {
   const pulseScale = 1 + (volume * 0.5);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark-elegant-background">
+    <div className={`min-h-screen flex items-center justify-center bg-dark-elegant-background transition-opacity duration-1000 ${isCallEnding ? 'opacity-0' : 'opacity-100'}`}>
       <div className="bg-dark-elegant-surface p-8 rounded-3xl shadow-2xl max-w-md w-full border border-dark-elegant-accent/30 backdrop-blur-lg">
         <div className="flex flex-col items-center space-y-8">
           <div className="relative flex items-center justify-center w-full">
