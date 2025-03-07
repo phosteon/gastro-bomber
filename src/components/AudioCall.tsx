@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import CallControls from './CallControls';
@@ -129,14 +128,16 @@ const AudioCall: React.FC = () => {
   const toggleMute = () => {
     if (retellClientRef.current) {
       try {
-        // Erst die tatsächliche Mikrofon-Stummschaltung über die SDK durchführen
         const newMuteState = !isMuted;
-        retellClientRef.current.setMicrophoneMuted(newMuteState);
         
-        // Dann den UI-Zustand aktualisieren
+        if (newMuteState) {
+          retellClientRef.current.mute();
+        } else {
+          retellClientRef.current.unmute();
+        }
+        
         setIsMuted(newMuteState);
         
-        // Feedback an den Benutzer geben
         toast.info(newMuteState ? "Mikrofon stumm geschaltet" : "Mikrofon aktiviert");
       } catch (error) {
         console.error("Fehler beim Umschalten der Stummschaltung:", error);
