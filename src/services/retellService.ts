@@ -4,21 +4,42 @@
 // simulieren wir diesen hier für Demo-Zwecke
 // In einer Produktionsumgebung sollte dies auf einem sicheren Server erfolgen
 
-// Hier müsste normalerweise der Retell API Key gespeichert werden
-// Dies ist nur ein Platzhalter für die Demo
-const RETELL_API_KEY = "YOUR_RETELL_API_KEY";
+// Retell API Key
+const RETELL_API_KEY = "key_89e10c9fd4840038a07e4ad3e477";
 
 // Simulierte Backend-Funktion, die einen Token zurückgibt
 // In der Produktion sollte dies ein tatsächlicher API-Aufruf zu Ihrem Backend sein
 export const createWebCall = async (assistantId: string) => {
-  // In einer echten Implementierung würde hier ein API-Aufruf zum Backend erfolgen,
-  // das dann mit dem RETELL_API_KEY den create-web-call Endpunkt aufruft
-  
-  console.log(`Creating web call for assistant ID: ${assistantId}`);
-  
-  // Dies ist ein Beispiel-Rückgabewert, der vom Backend kommen würde
-  return {
-    access_token: "simulated_access_token_for_demo",
-    call_id: "simulated_call_id_for_demo"
-  };
+  try {
+    console.log(`Creating web call for assistant ID: ${assistantId}`);
+    
+    // In einer echten Implementierung würde hier ein API-Aufruf zum Backend erfolgen
+    // Da wir dies direkt im Frontend für Demo-Zwecke tun, rufen wir die API direkt auf
+    
+    const response = await fetch('https://api.retellai.com/create-web-call', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${RETELL_API_KEY}`
+      },
+      body: JSON.stringify({
+        llm_websocket_url: "wss://api.retellai.com/llm-websocket",
+        assistant_id: assistantId,
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Retell API error: ${errorData.message || response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return {
+      access_token: data.access_token,
+      call_id: data.call_id
+    };
+  } catch (error) {
+    console.error("Error creating web call:", error);
+    throw error;
+  }
 };
