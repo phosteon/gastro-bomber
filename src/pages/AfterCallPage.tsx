@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Calendar, Check, Sparkle } from 'lucide-react';
@@ -80,7 +81,7 @@ const AfterCallPage: React.FC = () => {
         <div className="mb-8">
           <Button 
             onClick={handleBackToHome}
-            className="w-full sm:w-auto bg-black/20 hover:bg-white/15 text-white border border-white/10 transition-all duration-300 flex items-center justify-center gap-2"
+            className="w-full sm:w-auto bg-white/10 hover:bg-white/15 text-white border border-white/10 transition-all duration-300 flex items-center justify-center gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
             Zurück zur Startseite
