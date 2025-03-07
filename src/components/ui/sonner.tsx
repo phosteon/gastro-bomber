@@ -21,7 +21,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           cancelButton:
             "group-[.toast]:bg-dark-elegant-accent group-[.toast]:text-white/80",
           info: "!bg-dark-elegant-surface !border-[#22C55E]/30 !text-white",
-          success: "!bg-black/80 !border-[#22C55E]/40 !text-[#22C55E]",
+          success: "!bg-dark-elegant-surface !border-[#22C55E]/30 !text-[#22C55E]",
           warning: "!bg-black/80 !border-yellow-500/30 !text-yellow-400",
           error: "!bg-black/80 !border-red-500/30 !text-red-400",
         },
