@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
@@ -257,10 +256,9 @@ const AudioCall: React.FC = () => {
                 <div className="absolute -inset-2 rounded-full animate-pulse delay-75 bg-gradient-to-r from-green-500/30 to-green-600/30" />
                 <button
                   onClick={startCall}
-                  className="relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 flex items-center gap-2 z-10"
+                  className="relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 flex items-center justify-center z-10 w-36"
                 >
                   <Phone size={24} />
-                  Persönliches Erstgespräch starten
                 </button>
               </div>
             </div>
