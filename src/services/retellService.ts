@@ -16,7 +16,8 @@ export const createWebCall = async (assistantId: string) => {
     // In einer echten Implementierung würde hier ein API-Aufruf zum Backend erfolgen
     // Da wir dies direkt im Frontend für Demo-Zwecke tun, rufen wir die API direkt auf
     
-    const response = await fetch('https://api.retellai.com/create-web-call', {
+    // Korrigierte URL mit /v1/ im Pfad
+    const response = await fetch('https://api.retellai.com/v1/create-web-call', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,11 +30,23 @@ export const createWebCall = async (assistantId: string) => {
     });
     
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Retell API error: ${errorData.message || response.statusText}`);
+      // Verbesserte Fehlerprotokollierung
+      console.error(`API Fehler: ${response.status} ${response.statusText}`);
+      
+      try {
+        const errorData = await response.json();
+        console.error("API Fehlerdetails:", errorData);
+        throw new Error(`Retell API error: ${errorData.message || response.statusText}`);
+      } catch (parseError) {
+        // Falls die Antwort kein gültiges JSON ist
+        const errorText = await response.text();
+        console.error("API Fehlerantwort:", errorText);
+        throw new Error(`Retell API error: ${response.statusText} - ${errorText.substring(0, 100)}...`);
+      }
     }
     
     const data = await response.json();
+    console.log("Call erfolgreich erstellt:", data.call_id);
     return {
       access_token: data.access_token,
       call_id: data.call_id

@@ -23,6 +23,7 @@ const AudioCall: React.FC = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentCoachIndex, setCurrentCoachIndex] = useState(0);
+  const [isCallStarting, setIsCallStarting] = useState(false);
 
   const currentCoach = coaches[currentCoachIndex];
 
@@ -83,11 +84,20 @@ const AudioCall: React.FC = () => {
 
   const startCall = async () => {
     try {
+      if (isCallStarting) {
+        return; // Prevent multiple clicks
+      }
+      
+      setIsCallStarting(true);
+      
       if (!retellClientRef.current) {
-        toast.error("RetellAI client not initialized");
+        toast.error("RetellAI client nicht initialisiert");
+        setIsCallStarting(false);
         return;
       }
 
+      toast.info("Verbindung wird hergestellt...");
+      
       const createCallResponse = await createWebCall(currentCoach.assistantId);
       
       await retellClientRef.current.startCall({
@@ -96,10 +106,12 @@ const AudioCall: React.FC = () => {
 
       setIsCallActive(true);
       setDuration(0);
-      toast.success("Call started");
+      toast.success("Anruf gestartet");
     } catch (error) {
       console.error("Error starting call:", error);
-      toast.error("Failed to start call");
+      toast.error(`Fehler beim Starten des Anrufs: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`);
+    } finally {
+      setIsCallStarting(false);
     }
   };
 
