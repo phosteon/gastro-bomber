@@ -16,16 +16,16 @@ export const createWebCall = async (assistantId: string) => {
     // In einer echten Implementierung würde hier ein API-Aufruf zum Backend erfolgen
     // Da wir dies direkt im Frontend für Demo-Zwecke tun, rufen wir die API direkt auf
     
-    // Korrigierte URL mit /v1/ im Pfad
-    const response = await fetch('https://api.retellai.com/v1/create-web-call', {
+    // Aktualisierte URL auf V2 API-Endpoint
+    const response = await fetch('https://api.retellai.com/v2/create-web-call', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${RETELL_API_KEY}`
       },
       body: JSON.stringify({
-        llm_websocket_url: "wss://api.retellai.com/llm-websocket",
-        assistant_id: assistantId,
+        // Angepasster Request-Body entsprechend der V2 API-Dokumentation
+        agent_id: assistantId
       })
     });
     

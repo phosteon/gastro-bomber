@@ -11,6 +11,7 @@ const coaches: Coach[] = [
     name: "Jan Herwig Haubrich",
     subtitle: "Männercoach & Abnehmexperte",
     assistantId: "agent_4b42e7910546b5b0973ecf64cb",
+    agent_id: "agent_4b42e7910546b5b0973ecf64cb",
     avatarUrl: "/lovable-uploads/19226ee2-e8c4-471d-8544-d569bb3ab21e.png"
   }
 ];
@@ -98,7 +99,7 @@ const AudioCall: React.FC = () => {
 
       toast.info("Verbindung wird hergestellt...");
       
-      const createCallResponse = await createWebCall(currentCoach.assistantId);
+      const createCallResponse = await createWebCall(currentCoach.agent_id);
       
       await retellClientRef.current.startCall({
         accessToken: createCallResponse.access_token,
