@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
@@ -82,7 +81,7 @@ const AudioCall: React.FC = () => {
       setIsCallActive(false);
       setDuration(0);
       setIsCallEnding(true);
-      toast.info("Call ended");
+      toast.info("Anruf beendet");
       
       setTimeout(() => {
         navigate('/after-call');
@@ -91,7 +90,7 @@ const AudioCall: React.FC = () => {
 
     retellClient.on("error", (error) => {
       console.error("RetellAI error:", error);
-      toast.error("An error occurred during the call");
+      toast.error("Während des Anrufs ist ein Fehler aufgetreten");
       setIsCallActive(false);
     });
 
@@ -158,7 +157,7 @@ const AudioCall: React.FC = () => {
       setDuration(0);
       setIsCallEnding(true);
       
-      toast.info("Call ended");
+      toast.info("Anruf beendet");
       
       setTimeout(() => {
         navigate('/after-call');
