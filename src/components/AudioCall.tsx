@@ -249,10 +249,9 @@ const AudioCall: React.FC = () => {
                 <div className="absolute -inset-2 rounded-full animate-pulse delay-75 bg-gradient-to-r from-green-500/30 to-green-600/30" />
                 <button
                   onClick={startCall}
-                  className="relative px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 font-medium flex items-center gap-2 z-10 min-w-52"
+                  className="relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 font-medium flex items-center gap-2 z-10"
                 >
-                  <Phone size={20} />
-                  <span className="text-sm sm:text-base">Persönliches Erstgespräch starten</span>
+                  <Phone size={24} />
                 </button>
               </div>
             </div>
