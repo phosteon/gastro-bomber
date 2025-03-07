@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +14,33 @@ const coaches: Coach[] = [
     subtitle: "Männercoach & Abnehmexperte",
     assistantId: "agent_4b42e7910546b5b0973ecf64cb",
     agent_id: "agent_4b42e7910546b5b0973ecf64cb",
-    avatarUrl: "/lovable-uploads/19226ee2-e8c4-471d-8544-d569bb3ab21e.png"
+    avatarUrl: "/lovable-uploads/19226ee2-e8c4-471d-8544-d569bb3ab21e.png",
+    packages: {
+      community: {
+        name: "Community-Mitgliedschaft",
+        price: 99,
+        period: "pro Monat",
+        description: "Gemeinsam zum Erfolg mit unserer Community.",
+        features: [
+          "Austausch mit Gleichgesinnten",
+          "Fokus auf Gruppenunterstützung",
+          "Monatliche Q&A-Sessions"
+        ]
+      },
+      premium: {
+        name: "Premium Coaching",
+        price: 999,
+        period: "für 3 Monate",
+        description: "Intensive Betreuung für maximale Ergebnisse.",
+        features: [
+          "Inklusive Community-Mitgliedschaft",
+          "Persönliche 1:1 Betreuung",
+          "Individueller Stoffwechselplan",
+          "Wöchentliche Check-ins"
+        ],
+        highlighted: true
+      }
+    }
   }
 ];
 
