@@ -1,7 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Calendar, Check, Star } from 'lucide-react';
+import { ArrowLeft, Calendar, Check, Sparkle } from 'lucide-react';
 import PackageCard from '@/components/PackageCard';
 import CalendarBooking from '@/components/CalendarBooking';
 import { Button } from '@/components/ui/button';
@@ -121,12 +120,11 @@ const AfterCallPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Packages section with modernized style */}
+        {/* Packages section with modernized style - replaced Star icons with single Sparkle */}
         <div className="mb-16">
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <Star className="h-5 w-5 text-[#22C55E]" />
+          <div className="flex items-center justify-center gap-3 mb-8">
             <h2 className="text-2xl font-bold text-white">Wählen Sie Ihr Paket</h2>
-            <Star className="h-5 w-5 text-[#22C55E]" />
+            <Sparkle className="h-5 w-5 text-[#22C55E]" />
           </div>
           
           <div 
