@@ -157,8 +157,6 @@ const AudioCall: React.FC = () => {
       setDuration(0);
       setIsCallEnding(true);
       
-      toast.info("Anruf beendet");
-      
       setTimeout(() => {
         navigate('/after-call');
       }, 1000);
