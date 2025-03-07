@@ -202,7 +202,6 @@ const AudioCall: React.FC = () => {
             <h1 className="text-xl md:text-2xl font-medium tracking-tight text-gradient animate-fade-in bg-gradient-to-r from-white/90 to-white/70 bg-clip-text text-transparent">
               Persönliches Erstgespräch
             </h1>
-            <div className="h-0.5 w-16 mx-auto mt-2 bg-gradient-to-r from-dark-elegant-accent to-transparent rounded-full opacity-50"></div>
           </div>
 
           <div className="relative flex items-center justify-center w-full">
