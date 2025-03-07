@@ -19,33 +19,33 @@ const PackageCard: React.FC<PackageCardProps> = ({
 }) => {
   return (
     <div 
-      className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-700 delay-${animationDelay} transform ${
+      className={`bg-dark-elegant-surface rounded-xl shadow-lg overflow-hidden transition-all duration-700 delay-${animationDelay} transform ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      } ${pkg.highlighted ? 'ring-2 ring-purple-500 dark:ring-purple-400' : 'border border-gray-200 dark:border-gray-700'}`}
+      } ${pkg.highlighted ? 'ring-1 ring-[#22C55E]/30' : 'border border-dark-elegant-accent/10'}`}
     >
       {pkg.highlighted && (
-        <div className="bg-gradient-to-r from-purple-600 to-purple-400 dark:from-purple-500 dark:to-purple-300 text-white text-center text-sm py-1 font-medium">
+        <div className="bg-[#22C55E] text-white text-center text-sm py-1 font-medium">
           Empfohlen
         </div>
       )}
       
       <div className="p-6">
         <div className="text-center mb-6">
-          <h3 className="text-xl font-bold mb-2">{pkg.name}</h3>
+          <h3 className="text-xl font-bold mb-2 text-dark-elegant-text">{pkg.name}</h3>
           <div className="flex items-center justify-center">
-            <span className="text-3xl font-bold">{pkg.price}€</span>
-            <span className="text-gray-500 dark:text-gray-400 ml-1">{pkg.period}</span>
+            <span className="text-3xl font-bold text-dark-elegant-text">{pkg.price}€</span>
+            <span className="text-dark-elegant-muted ml-1">{pkg.period}</span>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">{pkg.description}</p>
+          <p className="text-dark-elegant-muted mt-2">{pkg.description}</p>
         </div>
         
         <div className="space-y-3 mb-6">
           {pkg.features.map((feature, index) => (
             <div key={index} className="flex items-start">
               <div className="flex-shrink-0 mt-0.5">
-                <Check className="h-5 w-5 text-green-500 dark:text-green-400" />
+                <Check className="h-5 w-5 text-[#22C55E]" />
               </div>
-              <p className="ml-3 text-gray-600 dark:text-gray-300">{feature}</p>
+              <p className="ml-3 text-dark-elegant-muted">{feature}</p>
             </div>
           ))}
         </div>
@@ -54,8 +54,8 @@ const PackageCard: React.FC<PackageCardProps> = ({
           onClick={onSelect}
           className={`w-full transition-all duration-300 ${
             pkg.highlighted
-              ? 'bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500'
-              : 'bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600'
+              ? 'bg-[#22C55E] hover:bg-[#1ea34d] text-white'
+              : 'bg-dark-elegant-accent hover:bg-dark-elegant-accent/80 text-dark-elegant-text'
           }`}
         >
           Auswählen
