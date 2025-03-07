@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
@@ -198,6 +199,14 @@ const AudioCall: React.FC = () => {
     <div className={`min-h-screen flex items-center justify-center bg-dark-elegant-background transition-opacity duration-1000 ${isCallEnding ? 'opacity-0' : 'opacity-100'}`}>
       <div className="bg-dark-elegant-surface p-8 rounded-3xl shadow-2xl max-w-md w-full border border-dark-elegant-accent/30 backdrop-blur-lg">
         <div className="flex flex-col items-center space-y-8">
+          {/* Adding the "Persönliches Erstgespräch" text */}
+          <div className="mb-2 w-full text-center">
+            <h1 className="text-xl md:text-2xl font-medium tracking-tight text-gradient animate-fade-in bg-gradient-to-r from-white/90 to-white/70 bg-clip-text text-transparent">
+              Persönliches Erstgespräch
+            </h1>
+            <div className="h-0.5 w-16 mx-auto mt-2 bg-gradient-to-r from-dark-elegant-accent to-transparent rounded-full opacity-50"></div>
+          </div>
+
           <div className="relative flex items-center justify-center w-full">
             <div className="relative">
               {isCallActive && isSpeaking && (
@@ -252,6 +261,7 @@ const AudioCall: React.FC = () => {
                   className="relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 font-medium flex items-center gap-2 z-10"
                 >
                   <Phone size={24} />
+                  Persönliches Erstgespräch starten
                 </button>
               </div>
             </div>
