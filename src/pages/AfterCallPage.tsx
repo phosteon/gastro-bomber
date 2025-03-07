@@ -49,11 +49,9 @@ const AfterCallPage: React.FC = () => {
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   
-  // Default to the first coach for now, in a real app this would come from state/params
   const coach = coaches[0];
 
   useEffect(() => {
-    // Trigger entrance animations
     setTimeout(() => setIsVisible(true), 100);
   }, []);
 
@@ -72,7 +70,6 @@ const AfterCallPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#171923] relative overflow-x-hidden">
-      {/* Enhanced background decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-5%] right-[-5%] w-2/5 h-2/5 bg-[#22C55E]/10 rounded-full blur-[100px]"></div>
         <div className="absolute bottom-[-5%] left-[-5%] w-2/5 h-2/5 bg-[#22C55E]/10 rounded-full blur-[100px]"></div>
@@ -80,19 +77,16 @@ const AfterCallPage: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-4 py-6 md:py-12 relative z-10">
-        {/* Back button */}
         <div className="mb-8">
           <Button 
-            variant="ghost" 
-            className="group transition-all duration-300 text-gray-300 hover:bg-white/5"
             onClick={handleBackToHome}
+            className="w-full sm:w-auto bg-black/20 hover:bg-white/15 text-white border border-white/10 transition-all duration-300 flex items-center justify-center gap-2"
           >
-            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            <ArrowLeft className="h-4 w-4" />
             Zurück zur Startseite
           </Button>
         </div>
 
-        {/* Hero section with coach profile */}
         <div 
           className={`mb-16 transition-all duration-700 transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -120,7 +114,6 @@ const AfterCallPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Packages section with modernized style - replaced Star icons with single Sparkle */}
         <div className="mb-16">
           <div className="flex items-center justify-center gap-3 mb-8">
             <h2 className="text-2xl font-bold text-white">Wählen Sie Ihr Paket</h2>
@@ -147,7 +140,6 @@ const AfterCallPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Calendar section with improved styling */}
         <div 
           id="calendar-section"
           className={`transition-all duration-700 delay-300 transform ${
