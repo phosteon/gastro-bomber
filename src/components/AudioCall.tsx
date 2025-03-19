@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
@@ -203,7 +204,8 @@ const AudioCall: React.FC = () => {
             </div>
           </div>
           
-          <div className={`w-full transition-all duration-500 animate-fade-in ${isCallActive ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+          {/* Removed the conditional opacity/scale that was hiding the boxes during calls */}
+          <div className="w-full transition-all duration-500 animate-fade-in">
             <div className="p-4 rounded-xl bg-gradient-to-r from-green-500/10 to-green-600/5 backdrop-blur-sm border border-green-500/20 shadow-lg mb-4">
               <div className="flex items-start space-x-3">
                 <div className="mt-1 p-2 rounded-full bg-green-500/20 text-green-400">
