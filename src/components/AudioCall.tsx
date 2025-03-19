@@ -3,9 +3,10 @@ import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
 import CallControls from './CallControls';
 import { toast } from 'sonner';
-import { Phone, Target, CheckCircle } from 'lucide-react';
+import { Phone, Target, CheckCircle, ShoppingBag, Utensils, Dumbbell } from 'lucide-react';
 import { Coach } from '../types/coach';
 import { createWebCall } from '../services/retellService';
+
 const coaches: Coach[] = [{
   name: "Jan Herwig Haubrich",
   subtitle: "Männercoach & Abnehmexperte",
@@ -30,6 +31,7 @@ const coaches: Coach[] = [{
     }
   }
 }];
+
 const AudioCall: React.FC = () => {
   const navigate = useNavigate();
   const retellClientRef = useRef<RetellWebClient | null>(null);
@@ -42,6 +44,7 @@ const AudioCall: React.FC = () => {
   const [isCallStarting, setIsCallStarting] = useState(false);
   const [isCallEnding, setIsCallEnding] = useState(false);
   const currentCoach = coaches[currentCoachIndex];
+
   useEffect(() => {
     const retellClient = new RetellWebClient();
     retellClientRef.current = retellClient;
@@ -78,6 +81,7 @@ const AudioCall: React.FC = () => {
       }
     };
   }, [navigate]);
+
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (isCallActive) {
@@ -91,6 +95,7 @@ const AudioCall: React.FC = () => {
       }
     };
   }, [isCallActive]);
+
   const startCall = async () => {
     try {
       if (isCallStarting) {
@@ -117,6 +122,7 @@ const AudioCall: React.FC = () => {
       setIsCallStarting(false);
     }
   };
+
   const endCall = () => {
     if (retellClientRef.current) {
       retellClientRef.current.stopCall();
@@ -128,6 +134,7 @@ const AudioCall: React.FC = () => {
       }, 1000);
     }
   };
+
   const toggleMute = () => {
     if (retellClientRef.current) {
       try {
@@ -145,12 +152,15 @@ const AudioCall: React.FC = () => {
       }
     }
   };
+
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
+
   const pulseScale = 1 + volume * 0.5;
+
   return <div className={`min-h-screen flex items-center justify-center bg-dark-elegant-background transition-opacity duration-1000 ${isCallEnding ? 'opacity-0' : 'opacity-100'}`}>
       <div className="bg-dark-elegant-surface p-8 rounded-3xl shadow-2xl max-w-md w-full border border-dark-elegant-accent/30 backdrop-blur-lg">
         <div className="flex flex-col items-center space-y-8">
@@ -194,7 +204,7 @@ const AudioCall: React.FC = () => {
           </div>
           
           <div className={`w-full transition-all duration-500 animate-fade-in ${isCallActive ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-            <div className="p-4 rounded-xl bg-dark-elegant-accent/10 backdrop-blur-sm border border-dark-elegant-accent/20 shadow-lg">
+            <div className="p-4 rounded-xl bg-dark-elegant-accent/10 backdrop-blur-sm border border-dark-elegant-accent/20 shadow-lg mb-4">
               <div className="flex items-start space-x-3">
                 <div className="mt-1 p-2 rounded-full bg-dark-elegant-accent/20 text-green-400">
                   <Target size={18} />
@@ -222,9 +232,41 @@ const AudioCall: React.FC = () => {
                 </div>
               </div>
             </div>
+            
+            <div className="p-4 rounded-xl bg-dark-elegant-accent/10 backdrop-blur-sm border border-dark-elegant-accent/20 shadow-lg">
+              <div className="flex items-start space-x-3">
+                <div className="mt-1 p-2 rounded-full bg-dark-elegant-accent/20 text-blue-400">
+                  <Dumbbell size={18} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-dark-elegant-text mb-2">Persönlicher KI Coach im Alltag</h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <ShoppingBag size={14} className="text-blue-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
+                        Einkaufunterstützung
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Utensils size={14} className="text-blue-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
+                        Ernährungplanung
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Dumbbell size={14} className="text-blue-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
+                        Trainingsplanung
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>;
 };
+
 export default AudioCall;
