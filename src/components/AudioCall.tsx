@@ -204,9 +204,9 @@ const AudioCall: React.FC = () => {
           </div>
           
           <div className={`w-full transition-all duration-500 animate-fade-in ${isCallActive ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-            <div className="p-4 rounded-xl bg-dark-elegant-accent/10 backdrop-blur-sm border border-dark-elegant-accent/20 shadow-lg mb-4">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-green-500/10 to-green-600/5 backdrop-blur-sm border border-green-500/20 shadow-lg mb-4">
               <div className="flex items-start space-x-3">
-                <div className="mt-1 p-2 rounded-full bg-dark-elegant-accent/20 text-green-400">
+                <div className="mt-1 p-2 rounded-full bg-green-500/20 text-green-400">
                   <Target size={18} />
                 </div>
                 <div>
