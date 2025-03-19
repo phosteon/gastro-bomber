@@ -200,7 +200,7 @@ const AudioCall: React.FC = () => {
                   <Target size={18} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-dark-elegant-text mb-2">Erstgespräch</h3>
+                  <h3 className="text-sm font-medium text-dark-elegant-text mb-2">KI Erstgespräch</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
