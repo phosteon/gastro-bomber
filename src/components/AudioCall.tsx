@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
 import CallControls from './CallControls';
 import { toast } from 'sonner';
-import { Phone, Target } from 'lucide-react';
+import { Phone, Target, CheckCircle } from 'lucide-react';
 import { Coach } from '../types/coach';
 import { createWebCall } from '../services/retellService';
 
@@ -257,7 +256,6 @@ const AudioCall: React.FC = () => {
             </div>
           </div>
           
-          {/* Initial consultation info section */}
           <div className={`w-full transition-all duration-500 animate-fade-in ${isCallActive ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
             <div className="p-4 rounded-xl bg-dark-elegant-accent/10 backdrop-blur-sm border border-dark-elegant-accent/20 shadow-lg">
               <div className="flex items-start space-x-3">
@@ -268,9 +266,26 @@ const AudioCall: React.FC = () => {
                   <h3 className="text-sm font-medium text-dark-elegant-text mb-2">
                     Im Erstgespräch:
                   </h3>
-                  <p className="text-xs text-dark-elegant-muted leading-relaxed">
-                    Bespreche deine Ziele mit Jan und formulieren eine erste Roadmap wie du sie erreichen kannst
-                  </p>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
+                        Bespreche deine Ziele mit Jan
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
+                        Formuliere eine erste Roadmap
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
+                        Entdecke wie du deine Ziele erreichen kannst
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
