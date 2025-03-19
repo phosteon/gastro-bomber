@@ -1,9 +1,10 @@
+
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
 import CallControls from './CallControls';
 import { toast } from 'sonner';
-import { Phone } from 'lucide-react';
+import { Phone, Target } from 'lucide-react';
 import { Coach } from '../types/coach';
 import { createWebCall } from '../services/retellService';
 
@@ -252,6 +253,25 @@ const AudioCall: React.FC = () => {
                   <Phone size={20} />
                   <span>Erstgespräch starten</span>
                 </button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Initial consultation info section */}
+          <div className={`w-full transition-all duration-500 animate-fade-in ${isCallActive ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+            <div className="p-4 rounded-xl bg-dark-elegant-accent/10 backdrop-blur-sm border border-dark-elegant-accent/20 shadow-lg">
+              <div className="flex items-start space-x-3">
+                <div className="mt-1 p-2 rounded-full bg-dark-elegant-accent/20 text-green-400">
+                  <Target size={18} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-dark-elegant-text mb-2">
+                    Im Erstgespräch:
+                  </h3>
+                  <p className="text-xs text-dark-elegant-muted leading-relaxed">
+                    Bespreche deine Ziele mit Jan und formulieren eine erste Roadmap wie du sie erreichen kannst
+                  </p>
+                </div>
               </div>
             </div>
           </div>
