@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { RetellWebClient } from "retell-client-js-sdk";
 import { useNavigate } from 'react-router-dom';
@@ -9,11 +8,11 @@ import { Coach } from '../types/coach';
 import { createWebCall } from '../services/retellService';
 
 const coaches: Coach[] = [{
-  name: "Jan Herwig Haubrich",
-  subtitle: "Männercoach & Abnehmexperte",
-  assistantId: "agent_4b42e7910546b5b0973ecf64cb",
-  agent_id: "agent_4b42e7910546b5b0973ecf64cb",
-  avatarUrl: "/lovable-uploads/19226ee2-e8c4-471d-8544-d569bb3ab21e.png",
+  name: "Alexandra",
+  subtitle: "KI-Telefonassistent\nRestaurant Goldener Schnabel",
+  assistantId: "agent_0edf41005a14388dcfd5820429",
+  agent_id: "agent_0edf41005a14388dcfd5820429",
+  avatarUrl: "/images/gastro-voice-profile.png",
   packages: {
     community: {
       name: "Community-Mitgliedschaft",
@@ -170,18 +169,25 @@ const AudioCall: React.FC = () => {
               {isCallActive && isSpeaking && <div className="absolute inset-0 rounded-full bg-blue-500/20 transition-transform duration-200" style={{
               transform: `scale(${pulseScale})`
             }} />}
-              <div className="w-24 h-24 rounded-full relative z-10 shadow-lg overflow-hidden transition-transform duration-300 transform">
-                <img src={currentCoach.avatarUrl} alt={`${currentCoach.name} Avatar`} className="w-full h-full object-cover transition-opacity duration-300 animate-fade-in" key={currentCoach.assistantId} />
+              <div className="w-32 h-32 rounded-full relative z-10 shadow-lg overflow-hidden transition-transform duration-300 transform">
+                <a href="https://www.gastro-voice.de" target="_blank" rel="noopener noreferrer">
+                  <img src="/images/gastro-voice-profile.png" alt={`${currentCoach.name} Avatar`} className="w-full h-full object-cover transition-opacity duration-300 animate-fade-in" key={currentCoach.assistantId} />
+                </a>
               </div>
             </div>
           </div>
 
           <div className="text-center transition-all duration-300 animate-fade-in" key={currentCoach.assistantId}>
-            <h2 className="text-xl font-semibold text-dark-elegant-text mb-1">
+            <h2 className="text-3xl font-semibold text-dark-elegant-text mb-1">
               {currentCoach.name}
             </h2>
-            <p className="text-sm text-dark-elegant-muted">
-              {currentCoach.subtitle}
+            <p className="text-base text-dark-elegant-muted">
+              {currentCoach.subtitle.split('\n').map((line, index, array) => (
+                <React.Fragment key={index}>
+                  {line}
+                  {index < array.length - 1 && <br />}
+                </React.Fragment>
+              ))}
             </p>
             {isCallActive && <p className="text-sm text-dark-elegant-muted font-mono">
                 {formatDuration(duration)}
@@ -196,9 +202,8 @@ const AudioCall: React.FC = () => {
               <div className="relative">
                 <div className="absolute -inset-4 rounded-full animate-pulse bg-gradient-to-r from-green-500/20 to-green-600/20" />
                 <div className="absolute -inset-2 rounded-full animate-pulse delay-75 bg-gradient-to-r from-green-500/30 to-green-600/30" />
-                <button onClick={startCall} className="relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 flex items-center justify-center gap-2 z-10 w-auto min-w-36">
-                  <Phone size={20} />
-                  <span>Erstgespräch starten</span>
+                <button onClick={startCall} className="relative p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 flex items-center justify-center z-10">
+                  <Phone size={24} />
                 </button>
               </div>
             </div>
@@ -212,53 +217,22 @@ const AudioCall: React.FC = () => {
                   <Target size={18} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-dark-elegant-text mb-2">KI Erstgespräch</h3>
+                  <h3 className="text-base font-medium text-dark-elegant-text mb-2">Weniger Stress, mehr Umsatz</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
-                        Bespreche deine Ziele mit Jan
+                      <span className="text-sm text-dark-elegant-muted leading-relaxed">Für Sie im Einsatz: nach Feierabend, zu Stosszeiten oder 24/7</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-dark-elegant-muted leading-relaxed">
+                        Beantwortet Reservierungen, Bestellungen und Kundenfragen 
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dark-elegant-muted leading-relaxed">Entwickle gemeinsam eine erste Roadmap</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
-                        Entdecke wie du deine Ziele erreichen kannst
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div className="p-4 rounded-xl bg-dark-elegant-accent/10 backdrop-blur-sm border border-dark-elegant-accent/20 shadow-lg">
-              <div className="flex items-start space-x-3">
-                <div className="mt-1 p-2 rounded-full bg-dark-elegant-accent/20 text-blue-400">
-                  <Dumbbell size={18} />
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-dark-elegant-text mb-2">Persönlicher KI Coach im Alltag</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <ShoppingBag size={14} className="text-blue-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
-                        Einkaufunterstützung
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Utensils size={14} className="text-blue-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
-                        Ernährungplanung
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Dumbbell size={14} className="text-blue-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dark-elegant-muted leading-relaxed">
-                        Trainingsplanung
+                      <span className="text-sm text-dark-elegant-muted leading-relaxed">
+                        Leitet wichtige Anrufe an Ihr Team weiter
                       </span>
                     </li>
                   </ul>

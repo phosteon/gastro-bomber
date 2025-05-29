@@ -1,9 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Calendar, Check, Sparkle } from 'lucide-react';
-import PackageCard from '@/components/PackageCard';
-import CalendarBooking from '@/components/CalendarBooking';
+import { ArrowLeft, Sparkle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Coach } from '@/types/coach';
 
@@ -47,8 +44,6 @@ const AfterCallPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
-  const [calendarVisible, setCalendarVisible] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   
   const coach = coaches[0];
 
@@ -56,13 +51,18 @@ const AfterCallPage: React.FC = () => {
     setTimeout(() => setIsVisible(true), 100);
   }, []);
 
-  const handlePackageSelect = (packageType: string) => {
-    setSelectedPackage(packageType);
-    setTimeout(() => {
-      setCalendarVisible(true);
-      document.getElementById('calendar-section')?.scrollIntoView({ behavior: 'smooth' });
-    }, 300);
-  };
+  useEffect(() => {
+    // Calendly Script laden
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup: Script entfernen wenn Komponente unmounted wird
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleBackToHome = () => {
     setIsVisible(false);
@@ -96,8 +96,8 @@ const AfterCallPage: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center gap-8 bg-black/20 p-8 rounded-2xl backdrop-blur-sm border border-white/5">
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-[#22C55E]/20 flex-shrink-0">
               <img 
-                src={coach.avatarUrl} 
-                alt={coach.name} 
+                src="/images/gastro-voice-profile.png"
+                alt="Jan Herwig Haubrich"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -117,53 +117,22 @@ const AfterCallPage: React.FC = () => {
 
         <div className="mb-16">
           <div className="flex items-center justify-center gap-3 mb-8">
-            <h2 className="text-2xl font-bold text-white">Wählen Sie Ihr Paket</h2>
+            <h2 className="text-2xl font-bold text-white text-center">Kostenlosen Intro-Call vereinbaren</h2>
             <Sparkle className="h-5 w-5 text-[#22C55E]" />
           </div>
           
+          {/* Calendly Inline-Widget */}
           <div 
-            className={`grid grid-cols-1 md:grid-cols-2 gap-8 transition-all duration-700 delay-100 transform ${
+            className={`transition-all duration-700 delay-100 transform ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <PackageCard 
-              package={coach.packages.community}
-              onSelect={() => handlePackageSelect('community')}
-              animationDelay={200}
-              isVisible={isVisible}
-            />
-            <PackageCard 
-              package={coach.packages.premium}
-              onSelect={() => handlePackageSelect('premium')}
-              animationDelay={400}
-              isVisible={isVisible}
-            />
-          </div>
-        </div>
-
-        <div 
-          id="calendar-section"
-          className={`transition-all duration-700 delay-300 transform ${
-            calendarVisible ? 'opacity-100 translate-y-0 mb-16' : 'opacity-0 translate-y-10 h-0 overflow-hidden'
-          }`}
-        >
-          {selectedPackage && (
-            <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-white/10">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center p-3 bg-[#22C55E]/20 rounded-full mb-4">
-                  <Calendar className="h-6 w-6 text-[#22C55E]" />
-                </div>
-                <h2 className="text-2xl font-bold mb-2 text-white">Vereinbaren Sie Ihr Erstgespräch</h2>
-                <p className="text-gray-400 max-w-md mx-auto">
-                  {selectedPackage === 'premium' 
-                    ? 'Wählen Sie einen Termin für Ihr Premium-Erstgespräch' 
-                    : 'Wählen Sie einen Termin für Ihr Community-Onboarding'}
-                </p>
-              </div>
-
-              <CalendarBooking packageType={selectedPackage} coachName={coach.name} />
+            <div className="bg-black/20 backdrop-blur-md rounded-2xl shadow-2xl p-4 border border-white/10">
+              <div className="calendly-inline-widget" 
+                   data-url="https://calendly.com/julien-phosteon/inro-call?background_color=000000&text_color=ffffff&primary_color=00ff91" 
+                   style={{minWidth: '320px', height: '700px'}}></div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
