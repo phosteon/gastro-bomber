@@ -8,8 +8,8 @@ import { Coach } from '../types/coach';
 import { createWebCall } from '../services/retellService';
 
 const coaches: Coach[] = [{
-  name: "Alexandra",
-  subtitle: "KI-Telefonassistent\nRestaurant Goldener Schnabel",
+  name: "KI-Telefonassistent",
+  subtitle: "Restaurant Goldener Schnabel",
   assistantId: "agent_0edf41005a14388dcfd5820429",
   agent_id: "agent_0edf41005a14388dcfd5820429",
   avatarUrl: "/images/gastro-voice-profile.png",
@@ -199,12 +199,51 @@ const AudioCall: React.FC = () => {
               <CallControls isMuted={isMuted} onToggleMute={toggleMute} onEndCall={endCall} />
             </div>
             <div className={`absolute transition-all duration-500 transform ${!isCallActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
-              <div className="relative">
-                <div className="absolute -inset-4 rounded-full animate-pulse bg-gradient-to-r from-green-500/20 to-green-600/20" />
-                <div className="absolute -inset-2 rounded-full animate-pulse delay-75 bg-gradient-to-r from-green-500/30 to-green-600/30" />
-                <button onClick={startCall} className="relative p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 flex items-center justify-center z-10">
-                  <Phone size={24} />
-                </button>
+              <div className="relative flex items-center justify-center w-full">
+                <div className="relative">
+                  <div className="absolute -inset-4 rounded-full animate-pulse bg-gradient-to-r from-green-500/20 to-green-600/20" />
+                  <div className="absolute -inset-2 rounded-full animate-pulse delay-75 bg-gradient-to-r from-green-500/30 to-green-600/30" />
+                  <button onClick={startCall} className="relative p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-green-500/25 flex items-center justify-center z-10">
+                    <Phone size={24} />
+                  </button>
+                </div>
+                
+                {/* Dotted arrow with looping animation and text - positioned to the right */}
+                <div className="absolute left-full ml-4 flex items-center space-x-2">
+                  <svg 
+                    width="40" 
+                    height="20" 
+                    viewBox="0 0 40 20" 
+                    className="text-green-400"
+                  >
+                    <defs>
+                      <style>
+                        {`
+                          .looping-arrow {
+                            animation: loop-arrow 2s ease-in-out infinite;
+                          }
+                          @keyframes loop-arrow {
+                            0%, 100% { transform: translateX(0px); opacity: 1; }
+                            50% { transform: translateX(8px); opacity: 0.6; }
+                          }
+                        `}
+                      </style>
+                    </defs>
+                    <path 
+                      d="M35 10 L15 10 L20 5 M15 10 L20 15" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeDasharray="2,2" 
+                      fill="none" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                      className="looping-arrow"
+                    />
+                  </svg>
+                  <span className="text-sm text-green-400 font-medium whitespace-nowrap">
+                    hier testen
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -217,11 +256,11 @@ const AudioCall: React.FC = () => {
                   <Target size={18} />
                 </div>
                 <div>
-                  <h3 className="text-base font-medium text-dark-elegant-text mb-2">Weniger Stress, mehr Umsatz</h3>
+                  <h3 className="text-base font-medium text-dark-elegant-text mb-2">Weniger Stress, mehr Umsatz!</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-dark-elegant-muted leading-relaxed">Für Sie im Einsatz: nach Feierabend, zu Stosszeiten oder 24/7</span>
+                      <span className="text-sm text-dark-elegant-muted leading-relaxed">Flexibel einsetzbar: nach Feierabend, zu Stosszeiten oder 24/7</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
@@ -232,7 +271,7 @@ const AudioCall: React.FC = () => {
                     <li className="flex items-start gap-2">
                       <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-dark-elegant-muted leading-relaxed">
-                        Leitet wichtige Anrufe an Ihr Team weiter
+                        inkl. leistungsstarter Software
                       </span>
                     </li>
                   </ul>
