@@ -276,7 +276,7 @@ const AudioCall: React.FC = () => {
                     <li className="flex items-start gap-2">
                       <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-dark-elegant-muted leading-relaxed">
-                        inkl. leistungsstarter Software
+                       inkl. umfassender Bestell- und Reservierungssoftware
                       </span>
                     </li>
                   </ul>
