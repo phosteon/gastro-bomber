@@ -98,6 +98,11 @@ const AudioCall: React.FC = () => {
 
   const startCall = async () => {
     try {
+      // Track Facebook Pixel event for demo call button click
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'DemocallButtonClicked');
+      }
+      
       if (isCallStarting) {
         return; // Prevent multiple clicks
       }

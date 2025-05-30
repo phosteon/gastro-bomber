@@ -48,6 +48,11 @@ const AfterCallPage: React.FC = () => {
   const coach = coaches[0];
 
   useEffect(() => {
+    // Track Facebook Pixel event for completed demo call
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'DemocallCompleted');
+    }
+    
     setTimeout(() => setIsVisible(true), 100);
   }, []);
 
