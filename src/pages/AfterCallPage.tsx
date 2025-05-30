@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Sparkle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Coach } from '@/types/coach';
 
@@ -69,6 +69,10 @@ const AfterCallPage: React.FC = () => {
     setTimeout(() => navigate('/'), 500);
   };
 
+  const handleGoToWebsite = () => {
+    window.open('http://gastro-voice.de', '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-[#171923] relative overflow-x-hidden">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
@@ -89,7 +93,7 @@ const AfterCallPage: React.FC = () => {
         </div>
 
         <div 
-          className={`mb-16 transition-all duration-700 transform ${
+          className={`transition-all duration-700 transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
@@ -103,25 +107,18 @@ const AfterCallPage: React.FC = () => {
             </div>
             <div className="text-center md:text-left">
               <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Das nächste Level mit {coach.name}
+                Auf den Geschmack gekommen?
               </h1>
               <p className="text-lg text-gray-300 mb-4 font-light">
-                {coach.subtitle}
-              </p>
-              <p className="text-gray-400 max-w-2xl leading-relaxed">
-                Vielen Dank für unser Gespräch! Entdecken Sie jetzt meine maßgeschneiderten Coaching-Angebote und sichern Sie sich Ihre persönliche Betreuung für maximale Ergebnisse.
+                Erfahren Sie in unserem kostenlosen 15-Minuten-Introcall, wie GastroVoice Sie im Alltag spürbar entlastet und gleichzeitig Ihren Umsatz ankurbeln kann.
               </p>
             </div>
           </div>
         </div>
 
         <div className="mb-16">
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <h2 className="text-2xl font-bold text-white text-center">Kostenlosen Intro-Call vereinbaren</h2>
-            <Sparkle className="h-5 w-5 text-[#22C55E]" />
-          </div>
           
-          {/* Calendly Inline-Widget */}
+          {/* Calendly Inline-Widget Beginn */}
           <div 
             className={`transition-all duration-700 delay-100 transform ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -129,8 +126,29 @@ const AfterCallPage: React.FC = () => {
           >
             <div className="bg-black/20 backdrop-blur-md rounded-2xl shadow-2xl p-4 border border-white/10">
               <div className="calendly-inline-widget" 
-                   data-url="https://calendly.com/julien-phosteon/inro-call?background_color=000000&text_color=ffffff&primary_color=00ff91" 
+                   data-url="https://calendly.com/julien-phosteon/inro-call" 
                    style={{minWidth: '320px', height: '700px'}}></div>
+            </div>
+          </div>
+          {/* Calendly Inline-Widget Ende */}
+          
+          {/* Website Button */}
+          <div 
+            className={`transition-all duration-700 delay-200 transform mt-8 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <div className="text-center mb-4">
+              <h3 className="text-xl md:text-2xl font-bold mb-2 text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Mehr Infos?</h3>
+            </div>
+            <div className="flex justify-center">
+              <Button 
+                onClick={handleGoToWebsite}
+                className="w-full sm:w-auto bg-white/10 hover:bg-white/15 text-white border border-white/10 transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                Zur GastroVoice Website
+                <ArrowRight className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>
